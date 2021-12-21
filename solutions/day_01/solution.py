@@ -1,9 +1,11 @@
 from typing import Generator, TextIO
 
-FILE = "solutions/01/input.txt"
+FILE = "solutions/day_01/input.txt"
 
 
-def yield_window_on_file(file: TextIO, length: int) -> Generator[tuple[int, ...], None, None]:
+def yield_window_on_file(
+    file: TextIO, length: int
+) -> Generator[tuple[int, ...], None, None]:
     buffer: list[int] = []
     for line in file:
         value = int(line.rstrip())
