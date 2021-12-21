@@ -10,4 +10,4 @@ isort .
 echo
 echo "Fixing code style..."
 echo
-black .
+black --target-version py310 .
