@@ -1,9 +1,9 @@
-import io
+from typing import Generator, TextIO
 
 FILE = "solutions/01/input.txt"
 
 
-def yield_window_on_file(file: io.FileIO, length: int) -> tuple[int, ...]:
+def yield_window_on_file(file: TextIO, length: int) -> Generator[tuple[int, ...], None, None]:
     buffer: list[int] = []
     for line in file:
         value = int(line.rstrip())
@@ -23,7 +23,7 @@ def solve_part_a() -> int:
     return depth_increase_count
 
 
-def solve_part_b():
+def solve_part_b() -> int:
     depth_increase_count = 0
     with open(FILE) as f, open(FILE) as g:
         # Offset second file by 1
