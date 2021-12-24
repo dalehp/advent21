@@ -99,6 +99,6 @@ def solve_part_b() -> int:
     return last_win
 
 
-if __name__ == "__main__":
+def run():
     print(solve_part_a())
     print(solve_part_b())

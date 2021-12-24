@@ -2,28 +2,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Generator, TextIO
+from typing import Iterator, TextIO
+
+from solutions.common import Point
 
 
 class Direction(Enum):
     forward = auto()
     up = auto()
     down = auto()
-
-
-@dataclass
-class Point:
-    x: int = 0
-    z: int = 0  # Depth (higher is deeper)
-
-    def __add__(self, o: Point) -> Point:
-        return Point(x=self.x + o.x, z=self.z + o.z)
-
-    def __mul__(self, o: int) -> Point:
-        return Point(x=o * self.x, z=o * self.z)
-
-    def __rmul__(self, o: int) -> Point:
-        return self.__mul__(o)
 
 
 @dataclass
@@ -62,7 +49,7 @@ def movement_to_vector(move: Movement) -> Point:
     return dir_v * move.length
 
 
-def movements_from_file(f: TextIO) -> Generator[Movement, None, None]:
+def movements_from_file(f: TextIO) -> Iterator[Movement]:
     for line in f:
         d, l = line.split()
         direction = Direction[d]
@@ -89,6 +76,6 @@ def solve_part_b() -> int:
     return ship.location.x * ship.location.z
 
 
-if __name__ == "__main__":
+def run():
     print(solve_part_a())
     print(solve_part_b())

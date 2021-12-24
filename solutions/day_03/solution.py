@@ -1,12 +1,12 @@
 import copy
 from collections import defaultdict
-from typing import Generator, Iterable, Sequence, TextIO
+from typing import Iterator, Iterable, Sequence, TextIO
 
 FILE = "solutions/day_03/input.txt"
 TEST_FILE = "solutions/day_03/test_input.txt"
 
 
-def iterate_byte_tuples(f: TextIO) -> Generator[tuple[int, ...], None, None]:
+def iterate_byte_tuples(f: TextIO) -> Iterator[tuple[int, ...]]:
     for line in f:
         yield tuple(int(x) for x in line.strip())
 
@@ -75,6 +75,6 @@ def solve_part_b():
     return oxygen * co2
 
 
-if __name__ == "__main__":
+def run():
     print(solve_part_a())
     print(solve_part_b())

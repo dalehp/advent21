@@ -1,11 +1,11 @@
-from typing import Generator, TextIO
+from typing import Iterator, TextIO
 
 FILE = "solutions/day_01/input.txt"
 
 
 def yield_window_on_file(
     file: TextIO, length: int
-) -> Generator[tuple[int, ...], None, None]:
+) -> Iterator[tuple[int, ...]]:
     buffer: list[int] = []
     for line in file:
         value = int(line.rstrip())
@@ -38,6 +38,6 @@ def solve_part_b() -> int:
     return depth_increase_count
 
 
-if __name__ == "__main__":
+def run():
     print(solve_part_a())
     print(solve_part_b())
