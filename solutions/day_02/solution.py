@@ -37,7 +37,6 @@ class Ship:
     location: Point = field(default_factory=Point)
     aim: int = 0
 
-
     def move_ship(self, move: Movement):
         match move.direction:
             case Direction.up:
@@ -49,7 +48,6 @@ class Ship:
                 self.location += v
             case _:
                 raise ValueError
-
 
 
 DIRECTION_TO_VECTOR: dict[Direction, Point] = {
