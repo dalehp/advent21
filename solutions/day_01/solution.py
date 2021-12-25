@@ -3,9 +3,7 @@ from typing import Iterator, TextIO
 FILE = "solutions/day_01/input.txt"
 
 
-def yield_window_on_file(
-    file: TextIO, length: int
-) -> Iterator[tuple[int, ...]]:
+def yield_window_on_file(file: TextIO, length: int) -> Iterator[tuple[int, ...]]:
     buffer: list[int] = []
     for line in file:
         value = int(line.rstrip())

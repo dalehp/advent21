@@ -1,8 +1,10 @@
 import importlib
+
 import click
 
+
 @click.command()
-@click.argument('day')
+@click.argument("day")
 def run(day: str):
     day = day.zfill(2)
     module_path = f"solutions.day_{day}.solution"

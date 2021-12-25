@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-@dataclass
+
+@dataclass(frozen=True)
 class Point:
     x: int = 0
     z: int = 0  # Depth (higher is deeper)

@@ -1,6 +1,6 @@
 import copy
 from collections import defaultdict
-from typing import Iterator, Iterable, Sequence, TextIO
+from typing import Iterable, Iterator, Sequence, TextIO
 
 FILE = "solutions/day_03/input.txt"
 TEST_FILE = "solutions/day_03/test_input.txt"
