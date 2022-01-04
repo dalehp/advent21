@@ -20,7 +20,8 @@ class Fish:
 
 def parse_fish(f: TextIO) -> list[Fish]:
     fish_str = f.readline().rstrip()
-    return [Fish(int(n)) for n in fish_str.split(',')]
+    return [Fish(int(n)) for n in fish_str.split(",")]
+
 
 def fish_at_day_n(n: int, fishes: Iterable[Fish]) -> int:
     day = 0
@@ -35,6 +36,7 @@ def fish_at_day_n(n: int, fishes: Iterable[Fish]) -> int:
         fish_counts = new_counts
         day += 1
     return fish_counts.total()
+
 
 def solve_part_a() -> int:
     with open(FILE) as f:
