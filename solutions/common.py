@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Iterator, Optional, TextIO
 
 
 @dataclass(frozen=True)
@@ -16,3 +17,24 @@ class Point:
 
     def __rmul__(self, o: int) -> Point:
         return self.__mul__(o)
+
+
+class IntGrid:
+    def __init__(self, f: TextIO):
+        self.grid: dict[Point, int] = {}
+        for j, line in enumerate(f):
+            for i, character in enumerate(line.rstrip()):
+                self.grid[Point(i, j)] = int(character)
+
+    def __iter__(self) -> Iterator[tuple[Point, int]]:
+        for position, height in self.grid.items():
+            yield position, height
+
+    def __getitem__(self, p: Point) -> int:
+        return self.grid[p]
+
+    def __contains__(self, p: Point) -> bool:
+        return p in self.grid
+
+    def get(self, p: Point) -> Optional[int]:
+        return self.grid.get(p)
