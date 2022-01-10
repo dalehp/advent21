@@ -15,6 +15,7 @@ class NodeType(Enum):
     SMALL = auto()
     BIG = auto()
 
+
 @dataclass
 class Node:
     name: str
@@ -35,14 +36,17 @@ class Node:
             return NodeType.SMALL
         raise ValueError(f"Invalid node name {self.name}")
 
+
 Graph = dict[str, Node]
+
 
 def load_edges_from_file(f: TextIO) -> list[tuple[str, str]]:
     edges = []
     for line in f:
-        l, _, r = line.rstrip().partition('-')
+        l, _, r = line.rstrip().partition("-")
         edges.append((l, r))
     return edges
+
 
 def construct_graph_from_edges(edges: list[tuple[str, str]]) -> Graph:
     graph = {}
@@ -56,22 +60,26 @@ def construct_graph_from_edges(edges: list[tuple[str, str]]) -> Graph:
         graph[r].children.append(graph[l])
     return graph
 
+
 def can_visit_node_a(node: Node, visited: Counter[str]) -> bool:
     return node.node_type is NodeType.BIG or node.name not in visited
+
 
 def can_visit_node_b(node: Node, visited: Counter[str]) -> bool:
     if node.node_type is NodeType.BIG:
         return True
     elif node.node_type is NodeType.SMALL:
-        if all(count == 1 for node, count in visited.items() if Node(node).node_type is NodeType.SMALL):
+        if all(
+            count == 1
+            for node, count in visited.items()
+            if Node(node).node_type is NodeType.SMALL
+        ):
             return True
     return node.name not in visited
 
 
-
-
 def count_paths_through_graph(graph: Graph, visit_fn: Callable) -> int:
-    paths = [[graph['start']]]
+    paths = [[graph["start"]]]
     completed = []
     while paths:
         path = paths.pop()
