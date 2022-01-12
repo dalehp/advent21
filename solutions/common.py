@@ -40,7 +40,7 @@ class IntGrid:
         return len(self.grid)
 
     def __add__(self, o: IntGrid) -> IntGrid:
-        return self.from_dict({**self.grid, **o})
+        return self.from_dict({**self.grid, **o.grid})
 
     @staticmethod
     def from_dict(d: dict[Point, int]) -> IntGrid:
@@ -88,10 +88,13 @@ class IntGrid:
         max_z = max(p.z for p in self.grid.keys())
         return Point(min_x, min_z), Point(max_x, max_z)
 
+
 ULDR = (Point(0, -1), Point(0, 1), Point(-1, 0), Point(1, 0))
+
 
 def get_adjacent_values(grid: IntGrid, point: Point) -> list[int]:
     return [h for p in ULDR if (h := grid.get(point + p)) is not None]
+
 
 def adjacent_points_and_values(grid: IntGrid, point: Point) -> list[tuple[Point, int]]:
     return [(point + p, h) for p in ULDR if (h := grid.get(point + p)) is not None]
