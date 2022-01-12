@@ -61,7 +61,7 @@ def all_flash(grid: IntGrid) -> bool:
 
 def solve_part_a() -> int:
     with open(FILE) as f:
-        grid = IntGrid(f)
+        grid = IntGrid.from_file(f)
 
     flashes = 0
     for _ in range(100):
@@ -72,7 +72,7 @@ def solve_part_a() -> int:
 
 def solve_part_b() -> int:
     with open(FILE) as f:
-        grid = IntGrid(f)
+        grid = IntGrid.from_file(f)
 
     step = 1
     while not all_flash(grid):

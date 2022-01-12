@@ -1,16 +1,10 @@
 import math
 from dataclasses import dataclass
 
-from solutions.common import IntGrid, Point
+from solutions.common import IntGrid, Point, ULDR, get_adjacent_values
 
 FILE = "solutions/day_09/input.txt"
 TEST_FILE = "solutions/day_09/test_input.txt"
-
-ULDR = (Point(0, -1), Point(0, 1), Point(-1, 0), Point(1, 0))
-
-
-def get_adjacent_heights(grid: IntGrid, point: Point) -> list[int]:
-    return [h for p in ULDR if (h := grid.get(point + p)) is not None]
 
 
 def get_basin_size(grid: IntGrid, point: Point) -> int:
@@ -38,20 +32,20 @@ def get_basin_size(grid: IntGrid, point: Point) -> int:
 
 def solve_part_a() -> int:
     with open(FILE) as f:
-        grid = IntGrid(f)
+        grid = IntGrid.from_file(f)
     risk = 0
     for point, height in grid:
-        if all(height < adj_height for adj_height in get_adjacent_heights(grid, point)):
+        if all(height < adj_height for adj_height in get_adjacent_values(grid, point)):
             risk += height + 1
     return risk
 
 
 def solve_part_b() -> int:
     with open(FILE) as f:
-        grid = IntGrid(f)
+        grid = IntGrid.from_file(f)
     low_points = []
     for point, height in grid:
-        if all(height < adj_height for adj_height in get_adjacent_heights(grid, point)):
+        if all(height < adj_height for adj_height in get_adjacent_values(grid, point)):
             low_points.append(point)
 
     basin_sizes = [get_basin_size(grid, l) for l in low_points]

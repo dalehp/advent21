@@ -20,11 +20,8 @@ class Point:
 
 
 class IntGrid:
-    def __init__(self, f: TextIO):
+    def __init__(self):
         self.grid: dict[Point, int] = {}
-        for j, line in enumerate(f):
-            for i, character in enumerate(line.rstrip()):
-                self.grid[Point(i, j)] = int(character)
 
     def __iter__(self) -> Iterator[tuple[Point, int]]:
         for position, value in self.grid.items():
@@ -42,6 +39,23 @@ class IntGrid:
     def __len__(self) -> int:
         return len(self.grid)
 
+    def __add__(self, o: IntGrid) -> IntGrid:
+        return self.from_dict({**self.grid, **o})
+
+    @staticmethod
+    def from_dict(d: dict[Point, int]) -> IntGrid:
+        grid = IntGrid()
+        grid.grid = d
+        return grid
+
+    @staticmethod
+    def from_file(f: TextIO) -> IntGrid:
+        grid = IntGrid()
+        for j, line in enumerate(f):
+            for i, character in enumerate(line.rstrip()):
+                grid[Point(i, j)] = int(character)
+        return grid
+
     @staticmethod
     def _char(i: int) -> str:
         if i == 10:
@@ -49,10 +63,11 @@ class IntGrid:
         return str(i)
 
     def __str__(self) -> str:
-        min_x = min(p.x for p in self.grid.keys())
-        max_x = max(p.x for p in self.grid.keys())
-        min_z = min(p.z for p in self.grid.keys())
-        max_z = max(p.z for p in self.grid.keys())
+        min_point, max_point = self.bounds
+        min_x = min_point.x
+        max_x = max_point.x
+        min_z = min_point.z
+        max_z = max_point.z
 
         return (
             "\n".join(
@@ -64,3 +79,19 @@ class IntGrid:
 
     def get(self, p: Point) -> Optional[int]:
         return self.grid.get(p)
+
+    @property
+    def bounds(self) -> tuple[Point, Point]:
+        min_x = min(p.x for p in self.grid.keys())
+        max_x = max(p.x for p in self.grid.keys())
+        min_z = min(p.z for p in self.grid.keys())
+        max_z = max(p.z for p in self.grid.keys())
+        return Point(min_x, min_z), Point(max_x, max_z)
+
+ULDR = (Point(0, -1), Point(0, 1), Point(-1, 0), Point(1, 0))
+
+def get_adjacent_values(grid: IntGrid, point: Point) -> list[int]:
+    return [h for p in ULDR if (h := grid.get(point + p)) is not None]
+
+def adjacent_points_and_values(grid: IntGrid, point: Point) -> list[tuple[Point, int]]:
+    return [(point + p, h) for p in ULDR if (h := grid.get(point + p)) is not None]
