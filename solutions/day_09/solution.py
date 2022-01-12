@@ -1,7 +1,7 @@
 import math
 from dataclasses import dataclass
 
-from solutions.common import IntGrid, Point, ULDR, get_adjacent_values
+from solutions.common import ULDR, IntGrid, Point, get_adjacent_values
 
 FILE = "solutions/day_09/input.txt"
 TEST_FILE = "solutions/day_09/test_input.txt"
